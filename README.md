@@ -1,8 +1,8 @@
 # Custom web server for testing perposes
 
 ## Endpoints
-- "/" - info
-- "/bytes/N" - return `N` random bytes in response body
+- `/` - info
+- `/bytes/N` - return `N` random bytes in response body
 
 ## Generate certificates
 
