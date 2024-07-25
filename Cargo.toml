@@ -1,0 +1,16 @@
+[package]
+name = "test-web-server"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.7.5"
+axum-server = { version = "0.6.0", features = ["tls-rustls"] }
+rand = "0.8.5"
+rustls = "0.23.12"
+rustls-pemfile = "2.1.2"
+tokio = { version = "1.39.1", features = ["full"] }
+tokio-rustls = "0.26.0"
+tower-http = { version = "0.5.2", features = ["trace"] }
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
