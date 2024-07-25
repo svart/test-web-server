@@ -1,5 +1,7 @@
 # Custom web server for testing perposes
 
+Supports HTTP/1.1, HTTP/2.
+
 ## Endpoints
 - `/` - info
 - `/bytes/N` - return `N` random bytes in response body
