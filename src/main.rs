@@ -6,6 +6,14 @@ use rand::Rng;
 use std::net::TcpListener;
 use tower_http::trace::TraceLayer;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+use once_cell::sync::Lazy;
+
+const MAX_BYTES_LIMIT: usize = 10_000_000;
+
+static RANDOM_BYTES: Lazy<Vec<u8>> = Lazy::new(|| {
+    let mut rng = rand::thread_rng();
+    (0..MAX_BYTES_LIMIT).map(|_| rng.gen::<u8>()).collect()
+});
 
 #[tokio::main]
 async fn main() {
@@ -44,11 +52,10 @@ async fn root() -> Html<&'static str> {
           <p>Use the /bytes/N endpoint to get N random bytes.</p>")
 }
 
-async fn rand_bytes(Path(n): Path<usize>) -> Result<Vec<u8>, StatusCode> {
-    if n > 1000_000 {
+async fn rand_bytes(Path(n): Path<usize>) -> Result<&'static [u8], StatusCode> {
+    if n > RANDOM_BYTES.len() {
         return Err(StatusCode::BAD_REQUEST);
     }
 
-    let mut rng = rand::thread_rng();
-    Ok((0..n).map(|_| rng.gen::<u8>()).collect())
+    Ok(&RANDOM_BYTES[..n])
 }

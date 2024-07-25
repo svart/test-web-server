@@ -1,95 +1,95 @@
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
-curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "DONE\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
+curl https://127.0.0.1:3000/bytes/100 --cacert keys/server.crt --output /dev/null -w "Total: %{time_total}s\n" -q -sS &
