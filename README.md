@@ -15,3 +15,17 @@ openssl req \
     -out keys/server.crt \
     -config openssl.cnf
 ```
+
+## Start server
+
+``` shell
+cargo run --release
+```
+
+## Client
+
+``` shell
+curl https://127.0.0.1:3000/bytes/123 \
+    --cacert keys/server.crt \
+    -v
+```
