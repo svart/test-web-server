@@ -12,7 +12,7 @@ use once_cell::sync::Lazy;
 
 const MAX_BYTES_LIMIT: usize = 10_000_000;
 
-static RANDOM_BYTES: Lazy<RandomDataBuffer> = Lazy::new(|| RandomDataBuffer::new() );
+static RANDOM_BYTES: Lazy<RandomDataBuffer> = Lazy::new(RandomDataBuffer::new);
 
 
 struct RandomDataBuffer {
@@ -31,7 +31,7 @@ impl RandomDataBuffer {
         }
     }
 
-    fn get_slice<'a>(&'a self, size: usize) -> Cow<'a, [u8]> {
+    fn get_slice(&self, size: usize) -> Cow<[u8]> {
         let mut position = self.current_position.lock().unwrap();
 
         if *position + size < MAX_BYTES_LIMIT {
