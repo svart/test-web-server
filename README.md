@@ -24,6 +24,19 @@ openssl req \
 cargo run --release
 ```
 
+Usage:
+
+``` shell
+Usage: test-web-server [OPTIONS]
+
+Options:
+  -a, --address <ADDRESS>            [default: 127.0.0.1]
+  -p, --port <PORT>                  [default: 3000]
+      --http-version <HTTP_VERSION>  [default: http2] [possible values: http1, http2]
+  -h, --help                         Print help
+  -V, --version                      Print version
+```
+
 ## Client
 
 ``` shell
