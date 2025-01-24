@@ -11,15 +11,22 @@ use axum::http::{HeaderMap, HeaderValue};
 use axum::response::IntoResponse;
 use axum::{extract::Path, http::StatusCode, response::Html, routing::get, Router};
 use axum_server::tls_rustls::RustlsConfig;
-use clap::Parser;
+use clap::{Parser, ValueEnum};
 use once_cell::sync::Lazy;
 use rand::{thread_rng, Rng};
+use rustls::{pki_types::CertificateDer, ServerConfig};
 use sha2::{Digest, Sha256};
 use std::net::TcpListener;
 use tokio::time::{interval, Duration};
 use tower_http::trace::TraceLayer;
 use tracing::{info, warn};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+
+#[derive(Debug, Clone, ValueEnum)]
+enum HttpVersion {
+    HTTP1,
+    HTTP2,
+}
 
 #[derive(Parser, Debug)]
 #[command(version, about)]
@@ -29,6 +36,9 @@ struct Cli {
 
     #[arg(short, long, default_value = "3000")]
     port: u16,
+
+    #[arg(long, default_value = "http1")]
+    http: HttpVersion,
 }
 
 const MAX_BYTES_LIMIT: usize = 10_000_000;
@@ -54,7 +64,7 @@ impl RandomDataBuffer {
     fn get_slice(&self, size: usize) -> Cow<[u8]> {
         let mut position = self.current_position.lock().unwrap();
 
-        if *position + size < MAX_BYTES_LIMIT {
+        if *position + size <= MAX_BYTES_LIMIT {
             let slice = &self.data[*position..*position + size];
 
             *position = (*position + size) % MAX_BYTES_LIMIT;
@@ -104,6 +114,11 @@ async fn main() {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
+    // Set a process wide default crypto provider
+    rustls::crypto::ring::default_provider()
+        .install_default()
+        .expect("Failed to install ring crypto provider as the default");
+
     let counter = Arc::new(RequestCounter::new());
     let counter_clone = counter.clone();
 
@@ -141,14 +156,36 @@ async fn main() {
 
     let listener = TcpListener::bind(addr).unwrap();
 
-    let config = RustlsConfig::from_pem_file("keys/server.crt", "keys/server.key")
-        .await
-        .unwrap();
+    let config = build_rustls_config(cli.http);
 
     axum_server::from_tcp_rustls(listener, config)
         .serve(app.into_make_service())
         .await
         .unwrap();
+}
+
+fn build_rustls_config(http_version: HttpVersion) -> RustlsConfig {
+    let cert = std::fs::read("keys/server.crt").expect("Failed to read cert file");
+    let key = std::fs::read("keys/server.key").expect("Failed to read key file");
+
+    let cert_chain = rustls_pemfile::certs(&mut cert.as_ref())
+        .collect::<std::io::Result<Vec<CertificateDer<'static>>>>()
+        .expect("Failed to load certs");
+    let key_der = rustls_pemfile::private_key(&mut key.as_ref())
+        .map(|k_opt| k_opt.expect("No PEM section describing private key found"))
+        .expect("Failed to load private key");
+
+    let mut server_config = ServerConfig::builder()
+        .with_no_client_auth()
+        .with_single_cert(cert_chain, key_der)
+        .expect("Failed to build rustls server config");
+
+    server_config.alpn_protocols = match http_version {
+        HttpVersion::HTTP1 => vec![b"http/1.1".to_vec()],
+        HttpVersion::HTTP2 => vec![b"h2".to_vec()],
+    };
+
+    RustlsConfig::from_config(Arc::new(server_config))
 }
 
 async fn root() -> Html<&'static str> {
