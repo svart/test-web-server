@@ -20,10 +20,8 @@ openssl req \
 
 ## Start server
 
-With only `HTTP/1.1` allowed:
-
 ``` shell
-cargo run --release -- --http http1
+cargo run --release
 ```
 
 Usage:
@@ -32,11 +30,11 @@ Usage:
 Usage: test-web-server [OPTIONS]
 
 Options:
-  -a, --address <ADDRESS>  [default: 127.0.0.1]
-  -p, --port <PORT>        [default: 3000]
-      --http <HTTP>        [default: http1] [possible values: http1, http2]
-  -h, --help               Print help
-  -V, --version            Print version
+  -a, --address <ADDRESS>            [default: 127.0.0.1]
+  -p, --port <PORT>                  [default: 3000]
+      --http-version <HTTP_VERSION>  [default: http2] [possible values: http1, http2]
+  -h, --help                         Print help
+  -V, --version                      Print version
 ```
 
 ## Client

@@ -37,8 +37,8 @@ struct Cli {
     #[arg(short, long, default_value = "3000")]
     port: u16,
 
-    #[arg(long, default_value = "http1")]
-    http: HttpVersion,
+    #[arg(long, default_value = "http2")]
+    http_version: HttpVersion,
 }
 
 const MAX_BYTES_LIMIT: usize = 10_000_000;
@@ -156,7 +156,7 @@ async fn main() {
 
     let listener = TcpListener::bind(addr).unwrap();
 
-    let config = build_rustls_config(cli.http);
+    let config = build_rustls_config(cli.http_version);
 
     axum_server::from_tcp_rustls(listener, config)
         .serve(app.into_make_service())
