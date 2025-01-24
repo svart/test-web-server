@@ -195,7 +195,7 @@ async fn root() -> Html<&'static str> {
     )
 }
 
-async fn rand_bytes<'a>(Path(n): Path<usize>, counter: Arc<RequestCounter>) -> impl IntoResponse {
+async fn rand_bytes(Path(n): Path<usize>, counter: Arc<RequestCounter>) -> impl IntoResponse {
     counter.increment();
 
     if n > MAX_BYTES_LIMIT {
