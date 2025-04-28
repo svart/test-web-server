@@ -1,7 +1,13 @@
 [package]
 name = "test-web-server"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
+
+[features]
+default = ["sha256_body"]
+no_body_hashing = []
+sha256_body = []
+
 
 [dependencies]
 axum = "0.7.5"
@@ -18,3 +24,13 @@ tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 sha2 = "0.10"
 base16ct = { version = "0.2", features = ["alloc"] }
 clap = { version = "4.5.10", features = ["derive"] }
+cfg-if = "1.0.0"
+crc = "3.2"
+crc32fast = "1.4"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[bench]]
+name    = "bench_main"
+harness = false

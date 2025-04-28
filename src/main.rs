@@ -1,25 +1,17 @@
-use std::{
-    borrow::Cow,
-    net::SocketAddr,
-    sync::{
-        atomic::{AtomicUsize, Ordering},
-        Arc, Mutex,
-    },
-};
+use std::{net::SocketAddr, sync::Arc};
 
-use axum::http::{HeaderMap, HeaderValue};
+use axum::extract::Path;
+use axum::http::StatusCode;
 use axum::response::IntoResponse;
-use axum::{extract::Path, http::StatusCode, response::Html, routing::get, Router};
+use axum::{Router, response::Html, routing::get};
 use axum_server::tls_rustls::RustlsConfig;
 use clap::{Parser, ValueEnum};
-use once_cell::sync::Lazy;
-use rand::{thread_rng, Rng};
-use rustls::{pki_types::CertificateDer, ServerConfig};
-use sha2::{Digest, Sha256};
+use rustls::{ServerConfig, pki_types::CertificateDer};
 use std::net::TcpListener;
-use tokio::time::{interval, Duration};
+use test_web_server::{MAX_BYTES_LIMIT, RequestCounter};
+use tokio::time::{Duration, interval};
 use tower_http::trace::TraceLayer;
-use tracing::{info, warn};
+use tracing::info;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 #[derive(Debug, Clone, ValueEnum)]
@@ -41,65 +33,36 @@ struct Cli {
     http_version: HttpVersion,
 }
 
-const MAX_BYTES_LIMIT: usize = 10_000_000;
+fn random_body_response(Path(n): Path<usize>, counter: Arc<RequestCounter>) -> impl IntoResponse {
+    counter.increment();
 
-static RANDOM_BYTES: Lazy<RandomDataBuffer> = Lazy::new(RandomDataBuffer::new);
-
-struct RandomDataBuffer {
-    data: Vec<u8>,
-    current_position: Mutex<usize>,
-}
-
-impl RandomDataBuffer {
-    fn new() -> Self {
-        let mut rng = thread_rng();
-        let data: Vec<u8> = (0..MAX_BYTES_LIMIT).map(|_| rng.gen()).collect();
-
-        Self {
-            data,
-            current_position: Mutex::new(0),
-        }
+    if n > MAX_BYTES_LIMIT {
+        return Err(StatusCode::BAD_REQUEST);
     }
 
-    fn get_slice(&self, size: usize) -> Cow<[u8]> {
-        let mut position = self.current_position.lock().unwrap();
+    cfg_if::cfg_if! {
+        if #[cfg(feature = "sha256_body")] {
+            use test_web_server::rand_bytes_sha256;
+            use axum::http::{HeaderMap, HeaderValue};
+            use tracing::warn;
 
-        if *position + size <= MAX_BYTES_LIMIT {
-            let slice = &self.data[*position..*position + size];
-
-            *position = (*position + size) % MAX_BYTES_LIMIT;
-
-            Cow::Borrowed(slice)
+            let (hash, slice) = rand_bytes_sha256(n);
+            let hex_hash = base16ct::lower::encode_string(&hash);
+            let mut headers = HeaderMap::new();
+            match HeaderValue::from_str(&hex_hash) {
+                Ok(value) => {
+                    headers.insert("sha256", value);
+                }
+                Err(e) => {
+                    warn!("err{e:?}");
+                }
+            };
+            Ok((headers, slice))
         } else {
-            let mut result = Vec::with_capacity(size);
-
-            let first_part_size = MAX_BYTES_LIMIT - *position;
-            result.extend_from_slice(&self.data[*position..]);
-            result.extend_from_slice(&self.data[..size - first_part_size]);
-
-            *position = (*position + size) % MAX_BYTES_LIMIT;
-            Cow::Owned(result)
+            use test_web_server::rand_bytes_plain;
+            let response = rand_bytes_plain(n);
+            Ok(response)
         }
-    }
-}
-
-struct RequestCounter {
-    count: AtomicUsize,
-}
-
-impl RequestCounter {
-    fn new() -> Self {
-        Self {
-            count: AtomicUsize::new(0),
-        }
-    }
-
-    fn increment(&self) {
-        self.count.fetch_add(1, Ordering::Relaxed);
-    }
-
-    fn reset(&self) -> usize {
-        self.count.swap(0, Ordering::Relaxed)
     }
 }
 
@@ -147,7 +110,7 @@ async fn main() {
         .route("/", get(root))
         .route(
             "/bytes/:n",
-            get(move |path| rand_bytes(path, counter.clone())),
+            get(async move |path| random_body_response(path, counter.clone())),
         )
         .layer(TraceLayer::new_for_http());
 
@@ -193,27 +156,4 @@ async fn root() -> Html<&'static str> {
         "<h1>Welcome to Random Bytes Server.</h1>
           <p>Use the /bytes/N endpoint to get N random bytes.</p>",
     )
-}
-
-async fn rand_bytes(Path(n): Path<usize>, counter: Arc<RequestCounter>) -> impl IntoResponse {
-    counter.increment();
-
-    if n > MAX_BYTES_LIMIT {
-        return Err(StatusCode::BAD_REQUEST);
-    }
-    let slice = RANDOM_BYTES.get_slice(n);
-    let mut hasher = Sha256::new();
-    hasher.update(&slice);
-    let hash = hasher.finalize();
-    let hex_hash = base16ct::lower::encode_string(&hash);
-    let mut headers = HeaderMap::new();
-    match HeaderValue::from_str(&hex_hash) {
-        Ok(value) => {
-            headers.insert("sha256", value);
-        }
-        Err(e) => {
-            warn!("err{e:?}");
-        }
-    };
-    Ok((headers, slice))
 }
