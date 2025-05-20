@@ -2,6 +2,8 @@ use std::{net::SocketAddr, sync::Arc};
 
 use axum::extract::Path;
 use axum::http::StatusCode;
+#[cfg(any(feature = "sha256", feature = "crc32"))]
+use axum::http::{HeaderMap, HeaderValue};
 use axum::response::IntoResponse;
 use axum::{Router, response::Html, routing::get};
 use axum_server::tls_rustls::RustlsConfig;
@@ -20,6 +22,15 @@ enum HttpVersion {
     HTTP2,
 }
 
+#[derive(Debug, Clone, ValueEnum)]
+enum BodyVerifyingAlgorithm {
+    None,
+    #[cfg(feature = "sha256")]
+    SHA256,
+    #[cfg(feature = "crc32")]
+    CRC32,
+}
+
 #[derive(Parser, Debug)]
 #[command(version, about)]
 struct Cli {
@@ -31,39 +42,65 @@ struct Cli {
 
     #[arg(long, default_value = "http2")]
     http_version: HttpVersion,
+
+    #[arg(long, default_value = "none")]
+    algorithm: BodyVerifyingAlgorithm,
 }
 
-fn random_body_response(Path(n): Path<usize>, counter: Arc<RequestCounter>) -> impl IntoResponse {
+fn plain_response(Path(n): Path<usize>, counter: Arc<RequestCounter>) -> impl IntoResponse {
     counter.increment();
-
     if n > MAX_BYTES_LIMIT {
         return Err(StatusCode::BAD_REQUEST);
     }
+    use test_web_server::rand_bytes_plain;
+    let response = rand_bytes_plain(n);
+    Ok(response)
+}
 
-    cfg_if::cfg_if! {
-        if #[cfg(feature = "sha256_body")] {
-            use test_web_server::rand_bytes_sha256;
-            use axum::http::{HeaderMap, HeaderValue};
-            use tracing::warn;
-
-            let (hash, slice) = rand_bytes_sha256(n);
-            let hex_hash = base16ct::lower::encode_string(&hash);
-            let mut headers = HeaderMap::new();
-            match HeaderValue::from_str(&hex_hash) {
-                Ok(value) => {
-                    headers.insert("sha256", value);
-                }
-                Err(e) => {
-                    warn!("err{e:?}");
-                }
-            };
-            Ok((headers, slice))
-        } else {
-            use test_web_server::rand_bytes_plain;
-            let response = rand_bytes_plain(n);
-            Ok(response)
-        }
+#[cfg(feature = "sha256")]
+fn sha256_response(Path(n): Path<usize>, counter: Arc<RequestCounter>) -> impl IntoResponse {
+    use tracing::warn;
+    counter.increment();
+    if n > MAX_BYTES_LIMIT {
+        return Err(StatusCode::BAD_REQUEST);
     }
+    use test_web_server::rand_bytes_sha256;
+
+    let (hash, slice) = rand_bytes_sha256(n);
+    let hex_hash = base16ct::lower::encode_string(&hash);
+    let mut headers = HeaderMap::new();
+    match HeaderValue::from_str(&hex_hash) {
+        Ok(value) => {
+            headers.insert("sha256", value);
+        }
+        Err(e) => {
+            warn!("err{e:?}");
+        }
+    };
+    Ok((headers, slice))
+}
+
+#[cfg(feature = "crc32")]
+fn crc32_response(Path(n): Path<usize>, counter: Arc<RequestCounter>) -> impl IntoResponse {
+    use tracing::warn;
+    counter.increment();
+    if n > MAX_BYTES_LIMIT {
+        return Err(StatusCode::BAD_REQUEST);
+    }
+    use test_web_server::rand_bytes_crc32;
+
+    let (crc, slice) = rand_bytes_crc32(n);
+    let hex_hash = base16ct::lower::encode_string(crc.to_le_bytes().as_slice());
+    let mut headers = HeaderMap::new();
+    match HeaderValue::from_str(&hex_hash) {
+        Ok(value) => {
+            headers.insert("crc32", value);
+        }
+        Err(e) => {
+            warn!("err{e:?}");
+        }
+    };
+    Ok((headers, slice))
 }
 
 #[tokio::main]
@@ -106,13 +143,32 @@ async fn main() {
     });
 
     // Build application with necessary routes
-    let app = Router::new()
+    let mut app = Router::new()
         .route("/", get(root))
-        .route(
-            "/bytes/:n",
-            get(async move |path| random_body_response(path, counter.clone())),
-        )
         .layer(TraceLayer::new_for_http());
+
+    match cli.algorithm {
+        BodyVerifyingAlgorithm::None => {
+            app = app.route(
+                "/bytes/{n}",
+                get(async move |path| plain_response(path, counter.clone())),
+            );
+        }
+        #[cfg(feature = "sha256")]
+        BodyVerifyingAlgorithm::SHA256 => {
+            app = app.route(
+                "/bytes/{n}",
+                get(async move |path| sha256_response(path, counter.clone())),
+            );
+        }
+        #[cfg(feature = "crc32")]
+        BodyVerifyingAlgorithm::CRC32 => {
+            app = app.route(
+                "/bytes/{n}",
+                get(async move |path| crc32_response(path, counter.clone())),
+            );
+        }
+    }
 
     let addr = SocketAddr::new(cli.address, cli.port);
     info!("listenning on {}", addr);

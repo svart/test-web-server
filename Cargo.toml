@@ -4,33 +4,30 @@ version = "0.1.0"
 edition = "2024"
 
 [features]
-default = ["sha256_body"]
-no_body_hashing = []
-sha256_body = []
+sha256 = ["dep:sha2", "dep:base16ct"]
+crc32 = ["dep:crc32fast", "dep:base16ct"]
+default = ["sha256", "crc32"]
 
 
 [dependencies]
-axum = "0.7.5"
+axum = "0.8"
 axum-server = { version = "0.7.1", features = ["tls-rustls"] }
 once_cell = "1.19.0"
-rand = "0.8.5"
+rand = "0.9"
 rustls = { version = "0.23.12", default-features = false, features = ["ring", "logging", "std", "tls12"] }
 rustls-pemfile = "2.1.2"
 tokio = { version = "1.39.1", features = ["full"] }
-tokio-rustls = { version = "0.26.0", default-features = false }
-tower-http = { version = "0.5.2", features = ["trace"] }
+tower-http = { version = "0.6", features = ["trace"] }
 tracing = "0.1.40"
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
-sha2 = "0.10"
-base16ct = { version = "0.2", features = ["alloc"] }
 clap = { version = "4.5.10", features = ["derive"] }
-cfg-if = "1.0.0"
-crc = "3.2"
-crc32fast = "1.4"
+sha2 = { version = "0.10", optional = true }
+crc32fast = { version = "1.4", optional = true }
+base16ct = { version = "0.2", features = ["alloc"], optional = true }
 
 [dev-dependencies]
-criterion = "0.5"
+criterion = "0.6"
 
 [[bench]]
-name    = "bench_main"
+name = "bench_main"
 harness = false

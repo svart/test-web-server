@@ -1,7 +1,7 @@
 use once_cell::sync::Lazy;
-use rand::{Rng, thread_rng};
-use sha2::digest::Output;
-use sha2::{Digest, Sha256};
+use rand::{Rng, rng};
+#[cfg(feature = "sha256")]
+use sha2::{Digest, Sha256, digest::Output};
 use std::borrow::Cow;
 use std::sync::Mutex;
 use std::sync::atomic::{AtomicUsize, Ordering};
@@ -17,8 +17,8 @@ struct RandomDataBuffer {
 
 impl RandomDataBuffer {
     fn new() -> Self {
-        let mut rng = thread_rng();
-        let data: Vec<u8> = (0..MAX_BYTES_LIMIT).map(|_| rng.r#gen()).collect();
+        let mut rng = rng();
+        let data: Vec<u8> = (0..MAX_BYTES_LIMIT).map(|_| rng.random()).collect();
 
         Self {
             data,
@@ -74,6 +74,7 @@ pub fn rand_bytes_plain(n: usize) -> Cow<'static, [u8]> {
     slice
 }
 
+#[cfg(feature = "sha256")]
 pub fn rand_bytes_sha256(n: usize) -> (Output<Sha256>, Cow<'static, [u8]>) {
     let slice = RANDOM_BYTES.get_slice(n);
     let mut hasher = Sha256::new();
@@ -82,14 +83,8 @@ pub fn rand_bytes_sha256(n: usize) -> (Output<Sha256>, Cow<'static, [u8]>) {
     (hash, slice)
 }
 
+#[cfg(feature = "crc32")]
 pub fn rand_bytes_crc32(n: usize) -> (u32, Cow<'static, [u8]>) {
-    let slice = RANDOM_BYTES.get_slice(n);
-    let crc = crc::Crc::<u32>::new(&crc::CRC_32_ISCSI);
-    let cksum = crc.checksum(&slice);
-    (cksum, slice)
-}
-
-pub fn rand_bytes_crc32fast(n: usize) -> (u32, Cow<'static, [u8]>) {
     let slice = RANDOM_BYTES.get_slice(n);
     let mut hasher = crc32fast::Hasher::new();
     hasher.update(&slice);
