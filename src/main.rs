@@ -1,31 +1,34 @@
-use std::{
-    borrow::Cow,
-    net::SocketAddr,
-    sync::{
-        atomic::{AtomicUsize, Ordering},
-        Arc, Mutex,
-    },
-};
+use std::{net::SocketAddr, sync::Arc};
 
+use axum::extract::Path;
+use axum::http::StatusCode;
+#[cfg(any(feature = "sha256", feature = "crc32"))]
 use axum::http::{HeaderMap, HeaderValue};
 use axum::response::IntoResponse;
-use axum::{extract::Path, http::StatusCode, response::Html, routing::get, Router};
+use axum::{Router, response::Html, routing::get};
 use axum_server::tls_rustls::RustlsConfig;
 use clap::{Parser, ValueEnum};
-use once_cell::sync::Lazy;
-use rand::{thread_rng, Rng};
-use rustls::{pki_types::CertificateDer, ServerConfig};
-use sha2::{Digest, Sha256};
+use rustls::{ServerConfig, pki_types::CertificateDer};
 use std::net::TcpListener;
-use tokio::time::{interval, Duration};
+use test_web_server::{MAX_BYTES_LIMIT, RequestCounter};
+use tokio::time::{Duration, interval};
 use tower_http::trace::TraceLayer;
-use tracing::{info, warn};
+use tracing::info;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 #[derive(Debug, Clone, ValueEnum)]
 enum HttpVersion {
     HTTP1,
     HTTP2,
+}
+
+#[derive(Debug, Clone, ValueEnum)]
+enum BodyVerifyingAlgorithm {
+    None,
+    #[cfg(feature = "sha256")]
+    SHA256,
+    #[cfg(feature = "crc32")]
+    CRC32,
 }
 
 #[derive(Parser, Debug)]
@@ -39,68 +42,65 @@ struct Cli {
 
     #[arg(long, default_value = "http2")]
     http_version: HttpVersion,
+
+    #[arg(long, default_value = "none")]
+    algorithm: BodyVerifyingAlgorithm,
 }
 
-const MAX_BYTES_LIMIT: usize = 10_000_000;
-
-static RANDOM_BYTES: Lazy<RandomDataBuffer> = Lazy::new(RandomDataBuffer::new);
-
-struct RandomDataBuffer {
-    data: Vec<u8>,
-    current_position: Mutex<usize>,
+fn plain_response(Path(n): Path<usize>, counter: Arc<RequestCounter>) -> impl IntoResponse {
+    counter.increment();
+    if n > MAX_BYTES_LIMIT {
+        return Err(StatusCode::BAD_REQUEST);
+    }
+    use test_web_server::rand_bytes_plain;
+    let response = rand_bytes_plain(n);
+    Ok(response)
 }
 
-impl RandomDataBuffer {
-    fn new() -> Self {
-        let mut rng = thread_rng();
-        let data: Vec<u8> = (0..MAX_BYTES_LIMIT).map(|_| rng.gen()).collect();
+#[cfg(feature = "sha256")]
+fn sha256_response(Path(n): Path<usize>, counter: Arc<RequestCounter>) -> impl IntoResponse {
+    use tracing::warn;
+    counter.increment();
+    if n > MAX_BYTES_LIMIT {
+        return Err(StatusCode::BAD_REQUEST);
+    }
+    use test_web_server::rand_bytes_sha256;
 
-        Self {
-            data,
-            current_position: Mutex::new(0),
+    let (hash, slice) = rand_bytes_sha256(n);
+    let hex_hash = base16ct::lower::encode_string(&hash);
+    let mut headers = HeaderMap::new();
+    match HeaderValue::from_str(&hex_hash) {
+        Ok(value) => {
+            headers.insert("sha256", value);
         }
-    }
-
-    fn get_slice(&self, size: usize) -> Cow<[u8]> {
-        let mut position = self.current_position.lock().unwrap();
-
-        if *position + size <= MAX_BYTES_LIMIT {
-            let slice = &self.data[*position..*position + size];
-
-            *position = (*position + size) % MAX_BYTES_LIMIT;
-
-            Cow::Borrowed(slice)
-        } else {
-            let mut result = Vec::with_capacity(size);
-
-            let first_part_size = MAX_BYTES_LIMIT - *position;
-            result.extend_from_slice(&self.data[*position..]);
-            result.extend_from_slice(&self.data[..size - first_part_size]);
-
-            *position = (*position + size) % MAX_BYTES_LIMIT;
-            Cow::Owned(result)
+        Err(e) => {
+            warn!("err{e:?}");
         }
-    }
+    };
+    Ok((headers, slice))
 }
 
-struct RequestCounter {
-    count: AtomicUsize,
-}
+#[cfg(feature = "crc32")]
+fn crc32_response(Path(n): Path<usize>, counter: Arc<RequestCounter>) -> impl IntoResponse {
+    use tracing::warn;
+    counter.increment();
+    if n > MAX_BYTES_LIMIT {
+        return Err(StatusCode::BAD_REQUEST);
+    }
+    use test_web_server::rand_bytes_crc32;
 
-impl RequestCounter {
-    fn new() -> Self {
-        Self {
-            count: AtomicUsize::new(0),
+    let (crc, slice) = rand_bytes_crc32(n);
+    let hex_hash = base16ct::lower::encode_string(crc.to_le_bytes().as_slice());
+    let mut headers = HeaderMap::new();
+    match HeaderValue::from_str(&hex_hash) {
+        Ok(value) => {
+            headers.insert("crc32", value);
         }
-    }
-
-    fn increment(&self) {
-        self.count.fetch_add(1, Ordering::Relaxed);
-    }
-
-    fn reset(&self) -> usize {
-        self.count.swap(0, Ordering::Relaxed)
-    }
+        Err(e) => {
+            warn!("err{e:?}");
+        }
+    };
+    Ok((headers, slice))
 }
 
 #[tokio::main]
@@ -143,13 +143,32 @@ async fn main() {
     });
 
     // Build application with necessary routes
-    let app = Router::new()
+    let mut app = Router::new()
         .route("/", get(root))
-        .route(
-            "/bytes/:n",
-            get(move |path| rand_bytes(path, counter.clone())),
-        )
         .layer(TraceLayer::new_for_http());
+
+    match cli.algorithm {
+        BodyVerifyingAlgorithm::None => {
+            app = app.route(
+                "/bytes/{n}",
+                get(async move |path| plain_response(path, counter.clone())),
+            );
+        }
+        #[cfg(feature = "sha256")]
+        BodyVerifyingAlgorithm::SHA256 => {
+            app = app.route(
+                "/bytes/{n}",
+                get(async move |path| sha256_response(path, counter.clone())),
+            );
+        }
+        #[cfg(feature = "crc32")]
+        BodyVerifyingAlgorithm::CRC32 => {
+            app = app.route(
+                "/bytes/{n}",
+                get(async move |path| crc32_response(path, counter.clone())),
+            );
+        }
+    }
 
     let addr = SocketAddr::new(cli.address, cli.port);
     info!("listenning on {}", addr);
@@ -193,27 +212,4 @@ async fn root() -> Html<&'static str> {
         "<h1>Welcome to Random Bytes Server.</h1>
           <p>Use the /bytes/N endpoint to get N random bytes.</p>",
     )
-}
-
-async fn rand_bytes(Path(n): Path<usize>, counter: Arc<RequestCounter>) -> impl IntoResponse {
-    counter.increment();
-
-    if n > MAX_BYTES_LIMIT {
-        return Err(StatusCode::BAD_REQUEST);
-    }
-    let slice = RANDOM_BYTES.get_slice(n);
-    let mut hasher = Sha256::new();
-    hasher.update(&slice);
-    let hash = hasher.finalize();
-    let hex_hash = base16ct::lower::encode_string(&hash);
-    let mut headers = HeaderMap::new();
-    match HeaderValue::from_str(&hex_hash) {
-        Ok(value) => {
-            headers.insert("sha256", value);
-        }
-        Err(e) => {
-            warn!("err{e:?}");
-        }
-    };
-    Ok((headers, slice))
 }
